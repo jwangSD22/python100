@@ -39,7 +39,7 @@ if(direction=='encode'):
         else:
             final_string += hash[letter]
     print(f'-----Your encoded message is: {final_string}-----')
-    
+
 elif(direction=='decode'):
     for index in range (0,25):
         hash[temp_list[index]] = alphabet_list[index]
@@ -51,3 +51,4 @@ elif(direction=='decode'):
     print(f'-----Your decoded message is: {final_string}-----')
 
 
+#
