@@ -1,3 +1,5 @@
+from art import logo
+
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 alphabet_list = list(alphabet)
 temp_list = alphabet_list.copy()
@@ -6,6 +8,8 @@ hash = {}
 direction_status = True
 direction = ''
 final_string = ''
+
+print(logo)
 
 while True:
     if direction_status == True:
@@ -41,7 +45,7 @@ if(direction=='encode'):
     print(f'-----Your encoded message is: {final_string}-----')
 
 elif(direction=='decode'):
-    for index in range (0,25):
+    for index in range (0,26):
         hash[temp_list[index]] = alphabet_list[index]
     for letter in text:
         if letter == ' ':
