@@ -1,4 +1,4 @@
-from art import logo
+from day10.art import logo
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 alphabet_list = list(alphabet)
