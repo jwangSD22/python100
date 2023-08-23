@@ -53,6 +53,9 @@ class Blackjack:
         self.deck = deck.copy()
         self.player_queue = []
         self.player_resolve_queue = []
+        self.decision_message = ''
+        self.decision = ''
+        self.round_active = True
 
     def initial_draw(self):
         self.player.add_card(drawcard(self.deck))
@@ -60,26 +63,49 @@ class Blackjack:
         self.player.add_card(drawcard(self.deck))
         self.cpu.add_card(drawcard(self.deck),True)
 
-    def initialize_game(self):
+    def initialize_gui(self):
+        while self.round_active:
+            clear_console()
+            self.gamelogic()
+            print(logo)
+            print(f'Your current bankroll is ${self.bankroll}\n')
+            print('DEALER HAND')
+            print(self.cpu.image)
+            print('PLAYER HAND')
+            print(self.player.image)
+            self.decision = input(f'{self.decision}')
+            if self.decision == 'booty':
+                self.round_active=False
+
+    def end_game_gui(self):
         clear_console()
         print(logo)
-        print('DEALER HAND')
-        print(self.cpu.image)
-        print('PLAYER HAND')
-        print(self.player.image)
-        
-        
+        print('THIS WAS THE LAST PART')
+        input('PRESS ANY KEY TO RESTART GAME')
+        launch_game()
+    
+    def gamelogic(self):
+        self.decision = 'ass selection here'
         #need to analyze current hand to determine options -- 
         #if it's a soft hand -- need to give option to ... double 
         #if the hand has two of the same cards, need to offer to split 
         
+def launch_game():
+    while True:
+        clear_console()
+        print(logo)
+        input('Press any key to start game')
+        clear_console()
+        print(logo)
+        bank_roll = int(input('What is your initial bank-roll? $'))
+        game=Blackjack(bank_roll)
+        game.initial_draw()
+        game.initialize_gui()
+        game.end_game_gui()
 
 
-print(logo)
-bank_roll = int(input('What is your initial bank-roll? $'))
-game = Blackjack(bank_roll)
-game.initial_draw()
-game.initialize_game()
+
+launch_game()
 
 
 
