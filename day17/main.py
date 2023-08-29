@@ -7,7 +7,6 @@ def clear_console():
 
 
 
-
 class Game:
     def __init__(self):
         self.chances = 10
