@@ -1,11 +1,14 @@
 from question_model import Question
 from data import question_data
 import random
+import html
+
+
 
 question_bank = []
 
 for item in question_data:
-    question_bank.append(Question(item['text'], item['answer']))
+    question_bank.append(Question(html.unescape(item['question']), item['correct_answer']))
 
 
 class QuizBrain:
