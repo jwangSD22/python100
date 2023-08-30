@@ -38,9 +38,7 @@ class CoffeShop:
                 get_drink_order = self.menu.find_drink(selection)
                 if get_drink_order:
                     cost = get_drink_order.cost
-                    resource_sufficient = self.coffee_maker.is_resource_sufficient(
-                        get_drink_order
-                    )
+                    resource_sufficient = self.coffee_maker.is_resource_sufficient(get_drink_order)
                     if resource_sufficient and self.money_machine.make_payment(cost):
                         self.coffee_maker.make_coffee(get_drink_order)
 
