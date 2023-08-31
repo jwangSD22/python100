@@ -1,0 +1,38 @@
+when the game starts... 
+
+
+
+init a variable for location of food
+init a snake HEAD
+
+
+create_random location for food
+    this function will keep running until it finds a suitable location 
+
+start a while loop that will keep moving my snake forward
+
+xx  i can bind on screen listeners to allow me to change the heading left or right but the snake will keep going forward
+
+    need to do a check here if snake goes out of screen range or hits itself -- it's game over 
+
+    could i technically used a linked list for this? 
+
+    each frame will have to capture the entire turtle and the frame can be generated using a linked list that forces generation of all the turtle locations with set pos?
+
+    so each frame will be moving the snake head forward 
+
+        check if snake head hits a game over event
+
+        check if snake head eats food
+            if snake head has a food item one square ahead of it:
+                generate a new food location
+                move the snake head forward to that spot to (eat the food)
+
+                cycle thru linked list to add a new tail turtle 
+                the new tail will assume the last position of the former last tail item 
+
+        
+
+
+
+
