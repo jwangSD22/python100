@@ -1,0 +1,1 @@
+scoreboard.publish_score()

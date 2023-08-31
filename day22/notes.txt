@@ -1,0 +1,15 @@
+the ball is its own object
+
+from main -- it will need to evaluate the ball's position and then reset the movement of the ball
+            based on what it touches.
+
+
+        how will the movement be controlled?
+
+        ball should have an internal heading set-
+
+        at that point, it can move forward x number of paces set by "speedfactor" -- can adjust later
+
+        
+
+
