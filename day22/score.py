@@ -14,6 +14,7 @@ class Scoreboard(Turtle):
         
 
     def publish_score(self):
+        self.clear()
         self.setpos(-320,220)
         self.write(f'{self.player_1_score}',align='center',font=('Courier',60))
         self.setpos(320,220)
