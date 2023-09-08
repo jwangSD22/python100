@@ -1,17 +1,27 @@
 from turtle import Turtle
 
-snake = Turtle()
-snake.penup()
-snake.shape('square')
-snake.shapesize(1,1)
-snake.color('white')
-snake.val = (0,0)
-snake.next = None
-snake.speed(2)
+class Snake(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.penup()
+        self.shape('square')
+        self.shapesize(1,1)
+        self.color('white')
+        self.val = (0,0)
+        self.next = None
+        self.speed(2)
+            
 
-food = Turtle()
-food.shape('square')
-food.shapesize(1,1)
-food.color('red')
-food.speed(0)
-food.penup()
+
+class Food(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.shape('square')
+        self.shapesize(1,1)
+        self.color('red')
+        self.speed(0)
+        self.penup()
+
+
+
+

@@ -1,11 +1,11 @@
 from turtle import Screen, Turtle
 from random import randint
-from init import snake, food
+from init import Snake, Food
 import time
 
 
 screen = Screen()
-screen.setup(width=640, height = 640)
+screen.setup(startx=100,starty=100, width=640, height = 640)
 screen.bgcolor('black')
 screen.title('Snake Game')
 screen.tracer(0)
@@ -53,30 +53,36 @@ def update_whole_snake(snakehead):
             current = current.next
     return True
 
+
+
 def are_positions_equal(pos1, pos2):
     return round(pos1[0], 2) == round(pos2[0], 2) and round(pos1[1], 2) == round(pos2[1], 2)
 
 
-
 class SnakeGame:
     def __init__(self):
-        self.snakehead = snake
-        self.food = food
+        self.snakehead = Snake()
+        self.food = Food()
         self.food_xy = None
-        self.turtle_pos_hash = {(0.00,0.00):True}
         self.tail = None
         self.coord = None
         self.score = 0
+        self.high_score = 0
 
     def gen_food_loc(self):
-        x = randint(-15,15)*20
-        y = randint(-15,15)*20
+        x = randint(-13,13)*20
+        y = randint(-13,13)*20
         # if these values are okay, then proceed, else, regenerate
         self.food_xy = (x,y)
         self.food.setpos(self.food_xy)
  
+    def check_new_highscore(self):
+        if self.score>self.high_score:
+            self.high_score = self.score
+        self.score = 0
 
     def initialize_game(self):
+        time.sleep(2)
         self.gen_food_loc()
 
 
@@ -85,7 +91,7 @@ class SnakeGame:
         while True:
 
             screen.update()
-            time.sleep(0.1)
+            time.sleep(0.08)
             #each frame needs to be generated here
             self.snakehead.prev = self.snakehead.pos()
             self.snakehead.forward(20)
@@ -93,6 +99,8 @@ class SnakeGame:
             if not update_whole_snake(self.snakehead):
                 #built in return for false return boolean meaning snake ate itself
                 print(f'snake bit itself. final score = {self.score}')
+                self.check_new_highscore()
+                print(f'High Score : {self.high_score}')
                 break
             #need a function to update all postions for all other snakes
             if are_positions_equal(self.snakehead.pos(),self.food.pos()):
@@ -102,11 +110,39 @@ class SnakeGame:
 
             if self.check_gameover():
                 print(f'went out of bounds. final score = {self.score}')
+                self.check_new_highscore()
+                print(f'High Score : {self.high_score}')
                 break
             
+        self.ask_new_game()
+        
 
 
-            
+    def ask_new_game(self):
+        
+        reset_question = input('New game? (y)es or (n)o   ') 
+        
+        if reset_question == 'y':
+            screen.clear()
+            screen.setup(startx=100,starty=100, width=640, height = 640)
+            screen.bgcolor('black')
+            screen.title('Snake Game')
+            screen.tracer(0)           
+            screen.listen()
+            screen.onkey(turn_right,'Right')
+            screen.onkey(turn_left,'Left')
+            screen.onkey(turn_up,'Up')
+            screen.onkey(turn_down,'Down')
+
+            self.snakehead = Snake()
+            self.food = Food()
+
+            self.initialize_game()
+
+
+        
+        
+        
     def check_gameover(self):
         # eats own tail 
         # goes out of bounds
