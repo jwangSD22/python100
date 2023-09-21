@@ -15,9 +15,24 @@ POMODORO = 0
 BREAK_ACTIVE = False
 MINUTES = None
 SECONDS = 60
+COUNTDOWN_MS = 1
 
+def jump():
+        window.lift()
+        window.focus_force()
+        window.attributes('-topmost', 1)
+        window.attributes('-topmost', 0)
+        print('jumped')
 
 # ---------------------------- TIMER RESET ------------------------------- # 
+
+def resetTimer():
+    global POMODORO
+    global BREAK_ACTIVE
+    POMODORO = 0
+    BREAK_ACTIVE = False
+    checks.config(text = '')
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 
@@ -25,88 +40,59 @@ SECONDS = 60
 
 def startPomodoro():
     global POMODORO
+    global BREAK_ACTIVE
 # if pomodoro === 4 && break_active
     # run a 30 min break 
         #set minutes to LONG_BREAK_MIN
         #Countdown(Minutes)
     if(POMODORO == 4 and BREAK_ACTIVE):
+
         countdown(30)
-        
+        window.after(30*60*COUNTDOWN_MS,jump)
+        BREAK_ACTIVE= False
+        resetTimer()
         
     # break_active to false 
     # message to press start to reset pomodoro or hit reset button 
     
 # if pomodoro ===4 && ! break_active
     # run timer reset function 
+    
 
-    if (POMODORO < 4 and BREAK_ACTIVE== False):
+    
+# if pomodoro is less than 4 and break is false 
+    # run a 25 min pomodoro
+        #set minutes to WORK_MIN
+        # Countdown(Minutes)
+    # add 1 to pomodoro
+    # update image for number of pomodoros
+        # set break_active to true
+    elif (POMODORO < 4 and BREAK_ACTIVE== False):
         countdown(25)
-        time.sleep(5)
+        window.after(25*60*COUNTDOWN_MS,jump)
+
         POMODORO+=1
         checkmarks = ''
         for _ in range (0,POMODORO):
             checkmarks = checkmarks+CHECK
         checks.config(text = checkmarks)
-        
-# if pomodoro is less than 4 and break is false 
-    # run a 25 min pomodoro
-        #set minutes to WORK_MIN
-        # Countdown(Minutes)
-        
-    # add 1 to pomodoro
-    # update image for number of pomodoros
-    
-    # set break_active to true
+        BREAK_ACTIVE = True
+
 
 # if pomodoro is less than 4 and break is True
     # run a 5 min break
         #set minutes to SHORT_BREAK_MIN
         # Countdown (Minutes)
     # set break_active to false
+    elif (POMODORO < 4 and BREAK_ACTIVE):
+        window.after(5*60*COUNTDOWN_MS,jump)
+        countdown(5)
+        BREAK_ACTIVE = False
     
 
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
-
-# def countdown(min):
-#     minutes = int(min)
-#     seconds = 60
-    
-
-    
-#     time.sleep(1)
-#     minutes-=1
-#     seconds-=1
-    
-#     print(type(minutes))
-    
-#     while(minutes > 0):
-#         readout_minutes = ''
-#         readout_seconds = ''
-
-#         if seconds == 60:
-#             readout_seconds = f'00'
-#         elif seconds < 10:
-#             readout_seconds = f'0{seconds}'
-#         else:
-#             readout_seconds = f'{seconds}'
-        
-#         if minutes<10:
-#             readout_minutes = f'0{minutes}'
-#         else:
-#             readout_minutes = f'{minutes}'
-        
-#         canvas.itemconfig(canvas_text,text=f'{readout_minutes}:{readout_seconds}')
-  
-    
-#         # time.sleep(1)
-#         seconds-=1
-#         print(f'seconds here {seconds}')
-#         if seconds == 0:
-#             minutes-=1
-#             seconds = 60
-            
             
 def countdown(minutes, seconds=0):
     if minutes < 0:
@@ -128,7 +114,7 @@ def countdown(minutes, seconds=0):
             minutes -= 1
             seconds = 59
         # Call the countdown function again after 1000 milliseconds (1 second)
-        window.after(5, countdown, minutes, seconds)
+        window.after(COUNTDOWN_MS, countdown, minutes, seconds)
 
 # Example usage:
 # countdown(25)  # Start a 25-minute countdown
@@ -147,7 +133,8 @@ timer.grid(row=0,column=1)
 
 canvas = Canvas(width=204,height=224)
 canvas.config(bg=YELLOW, highlightthickness=0)
-tomato_img = PhotoImage(file='tomato.png')
+img_path = "./tomato.png"
+tomato_img = PhotoImage(file=img_path)
 ### must specifiy x and y value
 canvas.create_image(102,112,image=tomato_img)
 canvas_text = canvas.create_text(102,125, text='00:00', fill='white', font=('Courier','24','bold'))
@@ -165,7 +152,7 @@ checks.config(bg=YELLOW,font=('Courier','30','bold'))
 
 
 
-reset = Button(text='Reset')
+reset = Button(text='Reset',command = resetTimer)
 reset.grid(row=2,column = 2)
 
 
