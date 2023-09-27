@@ -22,7 +22,7 @@ def get_random_from_list(list,number):
     return container
 
 
-#contain all of the values randomly generated based on user selections and flatten into a single list
+#contain all of the values randomly generated based on user selections and flatt en into a single list
 my_letters = get_random_from_list(letters,nr_letters)
 my_symbols  = get_random_from_list(symbols,nr_symbols)
 my_numbers = get_random_from_list(numbers,nr_numbers)
