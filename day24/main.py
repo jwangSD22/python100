@@ -29,3 +29,4 @@ def replace_letter(name):
 
 for name in name_array:
     replace_letter(name)
+    
