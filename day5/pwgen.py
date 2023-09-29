@@ -45,3 +45,4 @@ while len(flattened):
 
 
 print(f"Your new password is: {final}\nA variant you can use is: {joined_string}\n")
+
