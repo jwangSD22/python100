@@ -2,8 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService 
 from webdriver_manager.chrome import ChromeDriverManager 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 
 url = 'https://www.streetfighter.com/6/buckler/ranking/league?character_filter=1&character_id=luke&platform=1&user_status=1&home_filter=2&home_category_id=5&home_id=1&league_rank=24&page=1' 
 driver = webdriver.Chrome(service=ChromeService( 
