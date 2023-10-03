@@ -6,15 +6,30 @@ print(__name__)
 
 answer = random.sample(range(9),1)[0]
 
-print(f'the answer is {answer}')
+
+
+
 
 @app.route('/')
 def hello_world():
-    return '<h1>Guess a number between 0 and 9</h1>'
+    return f'<h1>Guess a number between 0 and 9</h1>'\
+    f'<div>the answer is {answer}</div>'
 
-@app.route('/<num>')
-def greet(num):
-    return f'hello!!! {num}'
+
+@app.route('/<int:value>')
+def check_val(value):
+    if value==answer:
+        return f'<div>'\
+    f'<h1>{value} and it is the right answer!</h1>'\
+    f'</div>'
+    elif value<answer:
+        return f'<div>'\
+        f'<h1>{value} and it is lower than the right answer!</h1>'\
+    f'</div>'
+    else:
+        return f'<div>'\
+        f'<h1>{value} and it is higher than the right answer!</h1>'\
+    f'</div>'
 
 
 
