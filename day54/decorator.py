@@ -1,21 +1,18 @@
 from datetime import datetime as dt
 import time
 
-def time_calc (function):
+
+def time_calc(function):
     def calculate_time():
         now = time.time()
         function()
         later = time.time()
 
-        elapsed = later-now
+        elapsed = later - now
 
         print(elapsed)
 
-
     return calculate_time
-
-
-
 
 
 @time_calc
