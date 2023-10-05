@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from marshmallow import Schema, fields
+import random
 
 
 app = Flask(__name__)
@@ -24,20 +26,49 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+class CafeSchema(Schema):
+    class Meta:
+        fields = (
+            'id',
+            'name',
+            'map_url',
+            'img_url',
+            'location',
+            'seats',
+            'has_toilet',
+            'has_wifi',
+            'has_sockets',
+            'can_take_calls',
+            'coffee_price'
+        )
 
-with app.create_contect():
+cafe_schema = CafeSchema()
+
+
+with app.app_context():
     db.create_all()
 
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route('/all')
+def get_all():
+    result = db.session.execute(db.select(Cafe))
+    all_cafes = result.scalars().all()
+    cafe_array = [cafe_schema.dump(cafe) for cafe in all_cafes]
+    return cafe_array
     
 
 ## HTTP GET - Read Record
 @app.route('/random',methods=['GET'])
-def read_record():
-    pass
+def get_random():
+    data = Cafe.query.all()
+    random_cafe = random.choice(data)
+    json_data = cafe_schema.dump(random_cafe)
+    print(json_data)
+    return json_data
 
 ## HTTP POST - Create Record
 
